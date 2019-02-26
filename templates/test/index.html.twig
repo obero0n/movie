@@ -45,6 +45,7 @@
   <thead>
     <tr>
       <th scope="col">Title</th>
+      <th scope="col">Date</th>
       <th scope="col">Author</th>
       <th scope="col">Type</th>
       <th scope="col">Evaluer</th>
@@ -55,6 +56,7 @@
   <tbody>
     <tr>
       <th scope="row">{{ m.title }}</th>
+      <td>{{ m.releaseYear|date("Y-m-d") }}</td>
       <td>{{ m.author }}</td>
       <td>{{ m.type }}</td>
       <td><a href="{{ path("evaluation", {"id" : m.id})}}" class="btn btn-primary">Evaluer</a></td>
