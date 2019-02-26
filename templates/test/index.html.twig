@@ -1,0 +1,76 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Accueil {% endblock %}
+
+{% block pageTitle %}Accueil{% endblock %}
+
+{% block main %}
+<form>
+  <div class="form-group">
+    <label for="exampleFormControlInput1">Email address</label>
+    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Example select</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect2">Example multiple select</label>
+    <select multiple class="form-control" id="exampleFormControlSelect2">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Example textarea</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  </div>
+</form>
+
+
+
+
+
+<table class="table table-striped table-dark">
+
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th scope="col">Type</th>
+      <th scope="col">Evaluer</th>
+      <th scope="col">Voir</th>
+    </tr>
+  </thead>
+    {% for m in ms %}
+  <tbody>
+    <tr>
+      <th scope="row">{{ m.title }}</th>
+      <td>{{ m.author }}</td>
+      <td>{{ m.type }}</td>
+      <td><a href="{{ path("evaluation", {"id" : m.id})}}" class="btn btn-primary">Evaluer</a></td>
+      <td><a href="{{ path("single", {"id" : m.id})}}" class="btn btn-primary">Voir</a></td>
+    </tr>
+  </tbody>
+  {% endfor %}
+</table>
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
