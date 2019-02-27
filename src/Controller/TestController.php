@@ -7,6 +7,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Movie;
 use App\Entity\Evaluation;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
 
 
 
@@ -55,7 +57,7 @@ class TestController extends AbstractController
      * @Route("/evaluation/{id}", name="evaluation")
      *
      */
-    public function rate(Movie $b, Request $c)
+    public function rate(Movie $b, Request $request)
     {
         $d = new Evaluation();
 
