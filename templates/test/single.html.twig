@@ -1,9 +1,38 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}{{ a.title }}{% endblock %}
+{% block title %}{{ movie.title }}{% endblock %}
 
-{% block pageTitle %} {{ a.title }} {% endblock %}
+
+
+{% block pageTitle %} {{ movie.title }} {% endblock %}
 
 {% block main %}
+
+<table class="table table-striped table-dark">
+
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Date</th>
+      <th scope="col">Author</th>
+      <th scope="col">Type</th>
+      <th scope="col">I Best Grade</th>
+      <th scope="col">II Best Grade</th>
+      <th scope="col">III Best Grade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">{{ movie.title }}</th>
+      <td>{{ movie.releaseYear|date("Y-m-d") }}</td>
+      <td>{{ movie.author }}</td>
+      <td>{{ movie.type }}</td>
+      {% for Bestevalitem in Besteval %}
+          <td>{{ Bestevalitem.grade }}</td>
+      {% endfor %}
+
+    </tr>
+  </tbody>
+</table>
 
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Evaluation;
+use App\Entity\Movie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -17,6 +18,28 @@ class EvaluationRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Evaluation::class);
+    }
+
+    public function getBestEval(Movie $movie){
+      return $this->createQueryBuilder('e')
+          ->Where('e.movie = :movie')
+          ->setParameter('movie', $movie)
+          ->orderBy('e.grade', 'DESC')
+          ->setFirstResult( 0 )
+          ->setMaxResults(3)
+          ->getQuery()
+          ->getResult();
+
+    }
+    public function getWorstEval(Movie $movie){
+      return $this->createQueryBuilder('e')
+          ->Where('e.movie = :movie')
+          ->setParameter('movie', $movie)
+          ->orderBy('e.grade', 'ASC')
+          ->setFirstResult( 0 )
+          ->setMaxResults(3)
+          ->getQuery()
+          ->getResult();
     }
 
     // /**

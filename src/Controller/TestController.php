@@ -7,9 +7,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Movie;
 use App\Entity\Evaluation;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 
 class TestController extends AbstractController
@@ -46,39 +48,45 @@ class TestController extends AbstractController
     /**
      * @Route("/single/{id}", name="single")
      */
-    public function show(Movie $a)
+    public function show(Movie $movie)
     {
+
+      $evals = $this->getDoctrine()->getRepository(Evaluation::class)->getBestEval($movie);
+
+dump($evals);
+
         return $this->render('test/single.html.twig', [
-          "a" => $a
+          "movie" => $movie,
+          "Besteval" => $evals
         ]);
     }
 
     /**
      * @Route("/evaluation/{id}", name="evaluation")
-     *
+     * @IsGranted("ROLE_USER")
      */
-    public function rate(Movie $b, Request $request)
+    public function rate(Movie $movie, Request $request)
     {
-        $d = new Evaluation();
+        $eval = new Evaluation();
 
-        $form = $this->createFormBuilder($d)
-            ->add('comment')
-            ->add('grade')
+        $form = $this->createFormBuilder($eval)
+            ->add('comment' , TextType::class)
+            ->add('grade' , IntegerType::class)
             ->add('save', SubmitType::class)
             ->getForm();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-          $d.setMovie($b);
-          $d.setUser($u);
+          $eval->setMovie($movie);
+          $eval->setUser($this->getUser());
           $entityManager = $this->getDoctrine()->getManager();
-          $entityManager->persist($d);
+          $entityManager->persist($eval);
           $entityManager->flush();
         }
 
         return $this->render('test/evaluation.html.twig', [
-          "b" => $b,
+          "b" => $movie,
           "form" => $form->createView()
         ]);
     }

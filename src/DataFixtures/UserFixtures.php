@@ -23,7 +23,7 @@ class UserFixtures extends Fixture
       for ($i=0; $i < 10; $i++) {
         $user = new User();
         $user->setUsername($faker->lastName());
-        $user->setPassword("password$i");
+        $user->setPassword($this->passwordEncoder->encodePassword($user,"password$i"));
         $manager->persist($user);
       }
         $manager->flush();
